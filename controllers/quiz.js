@@ -153,3 +153,69 @@ exports.check = (req, res, next) => {
         answer
     });
 };
+
+//GET /quizzes/randomplay
+
+exports.randomplay=(req,res,next)=>{
+
+    //Creamos un array con las ids de las preguntas de la BBDD
+    req.session.randomplay=req.session.randomplay || [];
+  
+    const puntuacion=req.session.randomplay.length;
+
+    //Consultamos la BBDD y sacamos las ids de las que faltan por responder
+
+    const sinContestar = {'id':{[Sequelize.Op.notIn]:req.session.randomplay}};
+    models.quiz.count({where: sinContestar})
+        .then(function(count){
+            return models.quiz.findAll({
+                where:sinContestar,
+                offset: Math.floor(Math.random()*coutn),
+                limit:1
+            })
+        })
+         // Pasamos el quiz al formulario
+        .then(function(quizzes){
+            if(quizzes[0]){
+                res.render('quizzes/random_play',{
+                    quiz:quizzes[0],
+                    score:req.session.randomplay.length
+                })
+            }else{
+                req.render('quizzes/random_nomore',{
+                    score:puntuacion
+                })
+            }
+        })
+        .catch(error=>next(error))
+};
+
+//GET /quizzes/:quizID/randomCheck
+ exports.randomCheck=(req,res,next)=>{
+
+    //Comprobamos si la respuesta obtenida de la BBDD guardada en req.query 
+    //es la misma del formulario
+    const answer=req.query.answer || "";
+    const result = (answer.toLowerCase().trim() === req.quiz.answer.toLowerCase().trim());
+       if(result) {
+        console.log(quiz.id);
+        if(!req.session.randomPlay.includes(quiz.id)){
+            req.session.randomPlay.push(quiz.id);
+        }
+
+    }
+    const score = req.session.randomPlay.length;
+    res.render('quizzes/random_result', {
+        score: score,
+        result: result,
+        answer: answer
+    });
+};
+
+ }
+
+
+
+
+
+
