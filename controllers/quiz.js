@@ -1,5 +1,7 @@
 const Sequelize = require("sequelize");
 const {models} = require("../models");
+const app = require('../../app');
+const http = require('http').createServer(app).listen(3000);
 
 // Autoload the quiz with id equals to :quizId
 exports.load = (req, res, next, quizId) => {
