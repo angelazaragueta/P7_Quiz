@@ -3,9 +3,10 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "heroku local:start",
+    "start": "node ./bin/www",
     "super": "supervisor ./bin/www",
-    "start_old": "node ./bin/www"
+    "start_old": "node ./bin/www",
+    "start_heroku": "heroku locak:start"
   },
   "engines": {
     "node": "8.9.1",
@@ -13,22 +14,30 @@
   },
   "dependencies": {
     "body-parser": "~1.18.2",
-    "connect-session-sequelize": "^5.0.1",
+    "connect-session-sequelize": "^5.2.1",
     "cookie-parser": "~1.4.3",
     "debug": "~2.6.9",
     "ejs": "~2.5.7",
     "express": "~4.15.5",
     "express-flash": "0.0.2",
     "express-partials": "^0.3.0",
+    "express-sequelize": "0.0.4",
     "express-session": "^1.15.6",
+    "findall": "0.0.1-security",
+    "install": "^0.11.0",
+    "latest-version": "^3.1.0",
     "method-override": "^2.3.10",
     "morgan": "~1.9.0",
+    "node-gyp": "^3.6.2",
+    "node-pre-gyp": "^0.10.0",
     "pg": "7.4.0",
-    "sequelize": "^4.37.5",
+    "rebuild": "^0.1.2",
+    "sequelize": "^4.37.8",
+    "sequelize-express-findbyid": "^1.0.7",
     "serve-favicon": "~2.4.5",
     "supervisor": "^0.12.0"
   },
   "devDependencies": {
-    "sqlite3": "^3.1.13"
+    "sqlite3": "https://github.com/mapbox/node-sqlite3/tarball/master"
   }
 }
