@@ -12,7 +12,14 @@ router.get('/', (req, res, next) => {
 router.get('/author', (req, res, next) => {
     res.render('author');
 });
-
+// coge todos los quizzes
+router.get('/quizzes',(req, res, next)=>{
+	models.quiz.findAll()
+	.then(quizzes=>{
+		res.render('quizzes',{quizzes});
+	})
+	.catch(error=>next(error));
+});
 
 // Autoload for routes using :quizId
 router.param('quizId', quizController.load);
@@ -29,7 +36,8 @@ router.delete('/quizzes/:quizId(\\d+)',    quizController.destroy);
 
 router.get('/quizzes/:quizId(\\d+)/play',  quizController.play);
 router.get('/quizzes/:quizId(\\d+)/check', quizController.check);
-//practica6
-router.get('/quizzes/randomplay',          quizController.randomplay);
+router.get('/quizzes/randomplay', quizController.check);
 router.get('/quizzes/randomcheck/:quizId(\\d+)', quizController.randomcheck);
+
+
 module.exports = router;
